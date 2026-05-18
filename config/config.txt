@@ -1,0 +1,1 @@
+g_service_json_path = config/BIRDS_service.json
