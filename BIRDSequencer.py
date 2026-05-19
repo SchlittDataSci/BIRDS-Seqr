@@ -1,5 +1,7 @@
 import hashlib
 import spacy
+import json_repair
+
 import pandas as pd
 from lingua import LanguageDetectorBuilder
 from itertools import chain
@@ -146,7 +148,7 @@ def hashTextsToCodons(parsedText: dict,
 #########################################
 
 
-def cleanList(text):
+def cleanListOld(text):
     """LLM output serial object cleaner"""
     if text == '[]':
         return []
@@ -164,6 +166,18 @@ def cleanList(text):
         return literal_eval(text)
     except Exception as e:
         print(e,text)
+
+
+def cleanList(text):
+
+    """LLM output serial object cleaner using json-repair"""
+    if not text or str(text).strip() in ('[]', '{}'):
+        return []    
+    try:
+        return json_repair.loads(text)
+    except Exception as e:
+        print(f"[cleanList] json_repair failed: {e}\nOriginal text: {text}")
+        return None
 
 
 chatFx = {'cleanList': lambda x,y: cleanList(x)}
