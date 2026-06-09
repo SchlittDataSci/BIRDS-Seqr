@@ -17,7 +17,7 @@ from ast import literal_eval
 
 import sys
 sys.path.append('../TabulAIrity/src/tabulairity/')
-import tabulairity as tb
+from tabulairity import core as tb
 
 
 BIRDSNetDf = pd.read_csv('PromptEvalNet.csv')
